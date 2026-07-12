@@ -87,9 +87,17 @@ import {
 } from "./gemini-function-id-rectifier";
 import { ModelRedirector } from "./model-redirector";
 import { nodeStreamToWebStreamSafe } from "./node-stream-to-web";
+import {
+  applyAzureImageAuth,
+  type AzureImageEndpoint,
+  buildAzureImageProxyUrl,
+  resolveAzureDeployment,
+  resolveAzureImageApiVersion,
+} from "./azure-image-adapter";
 import { ensureOpenAIChatStreamUsageOption } from "./openai-chat-usage-options";
 import {
   cloneOpenAIImageRequestMetadata,
+  getOpenAIImageEndpoint,
   sanitizeGenerationsRequestForProvider,
   serializeOpenAIImageMultipartRequest,
   syncOpenAIImageMultipartFromLogicalBody,
@@ -2732,6 +2740,36 @@ export class ProxyForwarder {
       // When provider has multiple endpoints, provider.url and proxyUrl hosts may differ
       const actualHost = HeaderProcessor.extractHost(proxyUrl);
       processedHeaders.set("host", actualHost);
+
+      // Azure OpenAI image endpoints: rewrite target URL + api-version + api-key auth.
+      // Runs after the standard URL/header build so the shared image body serialization
+      // below (JSON + multipart) is reused unchanged.
+      if (provider.providerType === "azure-openai") {
+        const azureEndpoint = getOpenAIImageEndpoint(requestPath);
+        if (azureEndpoint !== "generations" && azureEndpoint !== "edits") {
+          throw new ProxyError(
+            "Invalid request: azure-openai provider only supports /v1/images/generations and /v1/images/edits.",
+            400
+          );
+        }
+        const azureBody = (session.request.message ?? {}) as Record<string, unknown>;
+        const deployment = resolveAzureDeployment(azureBody);
+        if (!deployment) {
+          throw new ProxyError("Missing required parameter: model (Azure deployment name).", 400);
+        }
+        const apiVersion = resolveAzureImageApiVersion(
+          azureEndpoint as AzureImageEndpoint,
+          provider.azureImageApiVersions
+        );
+        proxyUrl = buildAzureImageProxyUrl(
+          effectiveBaseUrl,
+          deployment,
+          azureEndpoint as AzureImageEndpoint,
+          apiVersion
+        );
+        applyAzureImageAuth(processedHeaders, provider.key);
+        processedHeaders.set("host", HeaderProcessor.extractHost(proxyUrl));
+      }
 
       if (session.sessionId && session.shouldPersistSessionDebugArtifacts()) {
         void SessionManager.storeSessionRequestHeaders(
