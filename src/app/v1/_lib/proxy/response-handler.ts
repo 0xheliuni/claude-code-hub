@@ -3844,7 +3844,11 @@ export function parseUsageFromResponseText(
 // input_tokens (OpenAI semantics) rather than as a disjoint bucket (Anthropic
 // semantics). For these, subtract cache_read_input_tokens from input_tokens
 // before persistence so internal cost buckets are not double-counted.
-const PROVIDERS_WITH_CACHE_SUBSET_USAGE = new Set<string>(["codex", "openai-compatible"]);
+const PROVIDERS_WITH_CACHE_SUBSET_USAGE = new Set<string>([
+  "codex",
+  "openai-compatible",
+  "azure-openai",
+]);
 
 function adjustUsageForProviderType(
   usage: UsageMetrics,

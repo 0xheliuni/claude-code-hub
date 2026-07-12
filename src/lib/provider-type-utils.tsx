@@ -49,6 +49,11 @@ export const PROVIDER_TYPE_CONFIG: Record<
     iconColor: "text-cyan-600",
     bgColor: "bg-cyan-500/15",
   },
+  "azure-openai": {
+    icon: OpenAI,
+    iconColor: "text-sky-600",
+    bgColor: "bg-sky-500/15",
+  },
 };
 
 // 获取供应商类型配置

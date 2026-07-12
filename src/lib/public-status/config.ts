@@ -9,6 +9,7 @@ const VALID_PROVIDER_TYPES: ReadonlySet<ProviderType> = new Set([
   "gemini",
   "gemini-cli",
   "openai-compatible",
+  "azure-openai",
 ]);
 
 export interface PublicStatusModelConfig {

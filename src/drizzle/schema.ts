@@ -290,6 +290,10 @@ export const providers = pgTable('providers', {
   // null = 不附加；记录值会被合并到出站请求，但绝不能覆盖鉴权头或 final request filter
   customHeaders: jsonb('custom_headers').$type<Record<string, string> | null>(),
 
+  // Azure OpenAI 图像端点 api-version 覆盖（仅 azure-openai 类型使用）
+  // null = 使用内置默认版本表（generations/edits）
+  azureImageApiVersions: jsonb('azure_image_api_versions').$type<Record<string, string> | null>().default(null),
+
   // 超时配置（毫秒）
   // 注意：由于 undici fetch API 的限制，无法精确分离 DNS/TCP/TLS 连接阶段和响应头接收阶段
   // 参考：https://github.com/nodejs/undici/discussions/1313

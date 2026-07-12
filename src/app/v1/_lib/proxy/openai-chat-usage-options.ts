@@ -1,4 +1,4 @@
-const OPENAI_COMPATIBLE_PROVIDER_TYPES = new Set(["openai-compatible"]);
+const OPENAI_COMPATIBLE_PROVIDER_TYPES = new Set(["openai-compatible", "azure-openai"]);
 
 export function ensureOpenAIChatStreamUsageOption(
   body: Record<string, unknown>,

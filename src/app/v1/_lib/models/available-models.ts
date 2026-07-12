@@ -294,6 +294,7 @@ async function fetchModelsFromProvider(provider: Provider): Promise<FetchedModel
     claude: UPSTREAM_CONFIGS.claude,
     "claude-auth": UPSTREAM_CONFIGS.claude,
     "openai-compatible": UPSTREAM_CONFIGS.openai,
+    "azure-openai": UPSTREAM_CONFIGS.openai,
     codex: UPSTREAM_CONFIGS.openai,
     gemini: UPSTREAM_CONFIGS.gemini,
     "gemini-cli": UPSTREAM_CONFIGS.gemini,
@@ -322,7 +323,7 @@ export function getProviderTypesForFormat(clientFormat: ClientFormat): Provider[
       return ["claude", "claude-auth"];
     case "openai":
       // openai 格式需要对 codex 和 openai-compatible 分别决策
-      return ["codex", "openai-compatible"];
+      return ["codex", "openai-compatible", "azure-openai"];
     case "gemini":
     case "gemini-cli":
       return ["gemini", "gemini-cli"];

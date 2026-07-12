@@ -116,7 +116,7 @@ function checkFormatProviderTypeCompatibility(
     case "response":
       return providerType === "codex";
     case "openai":
-      return providerType === "openai-compatible";
+      return providerType === "openai-compatible" || providerType === "azure-openai";
     case "gemini":
       return providerType === "gemini";
     case "gemini-cli":
@@ -1236,7 +1236,11 @@ export class ProxyProviderResolver {
 
     // 将 providerType 映射为 decisionContext 允许的 targetType
     const targetType: "claude" | "codex" | "openai-compatible" | "gemini" | "gemini-cli" =
-      providerType === "claude-auth" ? "claude" : providerType;
+      providerType === "claude-auth"
+        ? "claude"
+        : providerType === "azure-openai"
+          ? "openai-compatible"
+          : providerType;
 
     if (typeFiltered.length === 0) {
       return {

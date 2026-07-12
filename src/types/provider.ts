@@ -8,7 +8,8 @@ export type ProviderType =
   | "codex"
   | "gemini"
   | "gemini-cli"
-  | "openai-compatible";
+  | "openai-compatible"
+  | "azure-openai";
 
 // Codex（Responses API）请求参数覆写偏好
 // - "inherit": 遵循客户端请求（默认）
@@ -389,6 +390,10 @@ export interface Provider {
 
   // 静态自定义请求头：会被合并到出站请求，但不能覆盖鉴权头
   customHeaders: ProviderCustomHeaders | null;
+
+  // Azure OpenAI 图像端点的 api-version 覆盖（仅对 azure-openai 类型有效）
+  // 形如 { "generations": "2024-02-01", "edits": "2025-04-01-preview" }；缺省走内置默认表
+  azureImageApiVersions?: Record<string, string> | null;
 
   // 超时配置（毫秒）
   firstByteTimeoutStreamingMs: number;

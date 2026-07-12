@@ -62,6 +62,7 @@ const ProviderTypeSchema = z.enum([
   "gemini-cli",
   "gemini",
   "openai-compatible",
+  "azure-openai",
 ]);
 
 type ProviderTypeInput = z.infer<typeof ProviderTypeSchema>;

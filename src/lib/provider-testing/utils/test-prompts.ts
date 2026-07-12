@@ -14,6 +14,7 @@ export const USER_AGENTS: Record<ProviderType, string> = {
   "claude-auth": "claude-cli/2.1.84 (external, cli)",
   codex: "Codex-CLI/1.0",
   "openai-compatible": "OpenAI-Compatible/2026.04",
+  "azure-openai": "OpenAI-Compatible/2026.04",
   gemini: "GeminiCLI/v24.11.0 (linux; x64)",
   "gemini-cli": "GeminiCLI/v24.11.0 (linux; x64)",
 };
@@ -113,6 +114,7 @@ export const DEFAULT_MODELS: Record<ProviderType, string> = {
   "claude-auth": "claude-haiku-4-5-20251001",
   codex: "gpt-5.5",
   "openai-compatible": "gpt-4.1-mini",
+  "azure-openai": "gpt-4.1-mini",
   gemini: "gemini-2.5-flash",
   "gemini-cli": "gemini-2.5-flash",
 };
@@ -122,6 +124,7 @@ export const DEFAULT_SUCCESS_CONTAINS: Record<ProviderType, string> = {
   "claude-auth": "pong",
   codex: "pong",
   "openai-compatible": "pong",
+  "azure-openai": "pong",
   gemini: "pong",
   "gemini-cli": "pong",
 };
@@ -131,6 +134,7 @@ export const API_ENDPOINTS: Record<ProviderType, string> = {
   "claude-auth": "/v1/messages",
   codex: "/v1/responses",
   "openai-compatible": "/v1/chat/completions",
+  "azure-openai": "/v1/chat/completions",
   gemini: "/v1beta/models/{model}:generateContent",
   "gemini-cli": "/v1beta/models/{model}:generateContent",
 };
@@ -151,6 +155,7 @@ export function getTestBody(providerType: ProviderType, model?: string): Record<
     case "codex":
       return { ...CODEX_TEST_BODY, model: targetModel };
     case "openai-compatible":
+    case "azure-openai":
       return { ...OPENAI_TEST_BODY, model: targetModel };
     case "gemini":
     case "gemini-cli":
@@ -195,6 +200,12 @@ export function getTestHeaders(
       Object.assign(headers, {
         ...OPENAI_TEST_HEADERS,
         Authorization: `Bearer ${apiKey}`,
+      });
+      break;
+    case "azure-openai":
+      Object.assign(headers, {
+        ...OPENAI_TEST_HEADERS,
+        "api-key": apiKey,
       });
       break;
     case "gemini":

@@ -10,6 +10,7 @@ const PROVIDER_TYPES: ProviderType[] = [
   "gemini-cli",
   "gemini",
   "openai-compatible",
+  "azure-openai",
 ];
 
 function isProviderType(value: string | null): value is ProviderType {

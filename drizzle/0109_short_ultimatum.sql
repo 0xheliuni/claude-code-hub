@@ -1,0 +1,1 @@
+ALTER TABLE "providers" ADD COLUMN "azure_image_api_versions" jsonb DEFAULT 'null'::jsonb;

@@ -182,6 +182,7 @@ export const PRESET_MAPPING: Record<ProviderType, string[]> = {
   "claude-auth": ["cc_haiku_basic", "cc_beta_cli", "cc_public_thinking"],
   codex: ["cx_codex_basic", "cx_gpt_basic"],
   "openai-compatible": ["oa_chat_basic", "oa_chat_stream"],
+  "azure-openai": ["oa_chat_basic", "oa_chat_stream"],
   gemini: ["gm_flash_basic", "gm_pro_basic"],
   "gemini-cli": ["gm_flash_basic", "gm_pro_basic"],
 };

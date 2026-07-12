@@ -52,6 +52,7 @@ export function kindFromProviderType(
     case "claude-auth":
       return isStream ? "anthropic/stream" : "anthropic/non-stream";
     case "openai-compatible":
+    case "azure-openai":
       return isStream ? "openai-chat/stream" : "openai-chat/non-stream";
     case "codex":
       return isStream ? "openai-responses/stream" : "openai-responses/non-stream";
