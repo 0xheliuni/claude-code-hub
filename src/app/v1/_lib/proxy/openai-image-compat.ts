@@ -985,13 +985,14 @@ export function sanitizeGenerationsRequestForProvider(
     return false;
   }
 
+  const isAzureOpenAI = provider.providerType === "azure-openai";
   const providerName = provider.name.toLowerCase();
   const providerUrl = provider.url.toLowerCase();
   const looksLikeYunAiAzure =
     (providerName.includes("yunai") && providerName.includes("azure")) ||
     (providerUrl.includes("yunai") && providerUrl.includes("azure"));
 
-  if (!looksLikeYunAiAzure) {
+  if (!isAzureOpenAI && !looksLikeYunAiAzure) {
     return false;
   }
 
