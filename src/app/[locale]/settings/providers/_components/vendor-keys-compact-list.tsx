@@ -89,7 +89,13 @@ export function VendorKeysCompactList(props: {
   const [createOpen, setCreateOpen] = useState(false);
 
   const defaultProviderType: ProviderType = props.providers[0]?.providerType ?? "claude";
-  const vendorAllowedTypes: ProviderType[] = ["claude", "codex", "gemini", "openai-compatible"];
+  const vendorAllowedTypes: ProviderType[] = [
+    "claude",
+    "codex",
+    "gemini",
+    "openai-compatible",
+    "azure-openai",
+  ];
   const statistics = props.statistics ?? {};
   const statisticsLoading = props.statisticsLoading ?? false;
   const currencyCode = props.currencyCode ?? "USD";

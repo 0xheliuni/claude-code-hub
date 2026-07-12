@@ -6,5 +6,6 @@
   "geminiCli": "Gemini CLI",
   "geminiCliDisabled": "",
   "openaiCompatible": "OpenAI Compatible",
+  "azureOpenai": "Azure OpenAI (Images)",
   "openaiCompatibleDisabled": " - в разработке"
 }
