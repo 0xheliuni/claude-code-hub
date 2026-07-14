@@ -95,9 +95,7 @@ export function OptionsSection({ subSectionRefs }: OptionsSectionProps) {
                 description={t("sections.routing.downloadImageUrlToBase64.desc")}
               >
                 <Switch
-                  id={
-                    isEdit ? "edit-download-image-url-to-base64" : "download-image-url-to-base64"
-                  }
+                  id={isEdit ? "edit-download-image-url-to-base64" : "download-image-url-to-base64"}
                   checked={state.routing.downloadImageUrlToBase64}
                   onCheckedChange={(checked) =>
                     dispatch({ type: "SET_DOWNLOAD_IMAGE_URL_TO_BASE64", payload: checked })

@@ -68,9 +68,9 @@ describe("inlineImageUrlsInImageBody", () => {
       arrayBuffer: async () => new Uint8Array([1]).buffer,
     });
     const body: Record<string, unknown> = { images: [{ image_url: "https://x/a.png" }] };
-    await expect(
-      inlineImageUrlsInImageBody(body, { fetchImpl: htmlFetch })
-    ).rejects.toBeInstanceOf(ImageInlineError);
+    await expect(inlineImageUrlsInImageBody(body, { fetchImpl: htmlFetch })).rejects.toBeInstanceOf(
+      ImageInlineError
+    );
   });
 
   it("throws on oversize download", async () => {
@@ -95,9 +95,9 @@ describe("inlineImageUrlsInImageBody", () => {
       "http://localhost/a.png",
     ]) {
       const body: Record<string, unknown> = { image_url: u };
-      await expect(
-        inlineImageUrlsInImageBody(body, { fetchImpl: okFetch })
-      ).rejects.toBeInstanceOf(ImageInlineError);
+      await expect(inlineImageUrlsInImageBody(body, { fetchImpl: okFetch })).rejects.toBeInstanceOf(
+        ImageInlineError
+      );
     }
   });
 });
