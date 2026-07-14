@@ -4352,6 +4352,8 @@ export interface operations {
                             preserveClientIp: boolean;
                             /** @description Whether sticky session reuse is disabled. */
                             disableSessionReuse: boolean;
+                            /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                            downloadImageUrlToBase64: boolean;
                             /** @description Model redirect rules. */
                             modelRedirects: unknown[] | null;
                             /** @description Scheduled active start time in HH:mm. */
@@ -4666,6 +4668,8 @@ export interface operations {
                     preserve_client_ip?: boolean;
                     /** @description Whether sticky session reuse is disabled. */
                     disable_session_reuse?: boolean;
+                    /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                    download_image_url_to_base64?: boolean;
                     /** @description Model redirect rules. */
                     model_redirects?: unknown[] | null;
                     /** @description Scheduled active start time. */
@@ -4817,6 +4821,8 @@ export interface operations {
                         preserveClientIp: boolean;
                         /** @description Whether sticky session reuse is disabled. */
                         disableSessionReuse: boolean;
+                        /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                        downloadImageUrlToBase64: boolean;
                         /** @description Model redirect rules. */
                         modelRedirects: unknown[] | null;
                         /** @description Scheduled active start time in HH:mm. */
@@ -5139,6 +5145,8 @@ export interface operations {
                         preserveClientIp: boolean;
                         /** @description Whether sticky session reuse is disabled. */
                         disableSessionReuse: boolean;
+                        /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                        downloadImageUrlToBase64: boolean;
                         /** @description Model redirect rules. */
                         modelRedirects: unknown[] | null;
                         /** @description Scheduled active start time in HH:mm. */
@@ -5628,6 +5636,8 @@ export interface operations {
                     preserve_client_ip?: boolean;
                     /** @description Whether sticky session reuse is disabled. */
                     disable_session_reuse?: boolean;
+                    /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                    download_image_url_to_base64?: boolean;
                     /** @description Model redirect rules. */
                     model_redirects?: unknown[] | null;
                     /** @description Scheduled active start time. */
@@ -5785,6 +5795,8 @@ export interface operations {
                         preserveClientIp: boolean;
                         /** @description Whether sticky session reuse is disabled. */
                         disableSessionReuse: boolean;
+                        /** @description Whether the proxy downloads image_url and inlines it as base64. */
+                        downloadImageUrlToBase64: boolean;
                         /** @description Model redirect rules. */
                         modelRedirects: unknown[] | null;
                         /** @description Scheduled active start time in HH:mm. */
