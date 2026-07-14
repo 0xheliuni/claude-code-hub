@@ -90,6 +90,22 @@ export function OptionsSection({ subSectionRefs }: OptionsSectionProps) {
                 />
               </ToggleRow>
 
+              <ToggleRow
+                label={t("sections.routing.downloadImageUrlToBase64.label")}
+                description={t("sections.routing.downloadImageUrlToBase64.desc")}
+              >
+                <Switch
+                  id={
+                    isEdit ? "edit-download-image-url-to-base64" : "download-image-url-to-base64"
+                  }
+                  checked={state.routing.downloadImageUrlToBase64}
+                  onCheckedChange={(checked) =>
+                    dispatch({ type: "SET_DOWNLOAD_IMAGE_URL_TO_BASE64", payload: checked })
+                  }
+                  disabled={state.ui.isPending}
+                />
+              </ToggleRow>
+
               {/* Swap Cache TTL Billing */}
               <ToggleRow
                 label={t("sections.routing.swapCacheTtlBilling.label")}

@@ -645,6 +645,7 @@ function sanitizeProvider(
     proxyUrl: redactUrlCredentials(provider.proxyUrl),
     proxyFallbackToDirect: provider.proxyFallbackToDirect,
     customHeaders: redactHeaderRecord(provider.customHeaders),
+    downloadImageUrlToBase64: provider.downloadImageUrlToBase64 ?? false,
     firstByteTimeoutStreamingMs: provider.firstByteTimeoutStreamingMs,
     streamingIdleTimeoutMs: provider.streamingIdleTimeoutMs,
     requestTimeoutNonStreamingMs: provider.requestTimeoutNonStreamingMs,

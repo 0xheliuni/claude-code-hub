@@ -40,6 +40,9 @@ export const ProviderSummarySchema = z
     providerVendorId: z.number().int().nullable().describe("Provider vendor id."),
     preserveClientIp: z.boolean().describe("Whether client IP is preserved upstream."),
     disableSessionReuse: z.boolean().describe("Whether sticky session reuse is disabled."),
+    downloadImageUrlToBase64: z
+      .boolean()
+      .describe("Whether the proxy downloads image_url and inlines it as base64."),
     modelRedirects: z.array(z.unknown()).nullable().describe("Model redirect rules."),
     activeTimeStart: NullableStringSchema.describe("Scheduled active start time in HH:mm."),
     activeTimeEnd: NullableStringSchema.describe("Scheduled active end time in HH:mm."),
@@ -372,6 +375,10 @@ export const ProviderCreateSchema = z
       .boolean()
       .optional()
       .describe("Whether sticky session reuse is disabled."),
+    download_image_url_to_base64: z
+      .boolean()
+      .optional()
+      .describe("Whether the proxy downloads image_url and inlines it as base64."),
     model_redirects: z.array(z.unknown()).nullable().optional().describe("Model redirect rules."),
     active_time_start: TimeOfDaySchema.nullable()
       .optional()

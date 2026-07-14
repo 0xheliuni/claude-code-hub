@@ -336,6 +336,7 @@ function ProviderFormContent({
           provider_type: state.routing.providerType,
           preserve_client_ip: state.routing.preserveClientIp,
           disable_session_reuse: state.routing.disableSessionReuse,
+          download_image_url_to_base64: state.routing.downloadImageUrlToBase64,
           model_redirects:
             state.routing.modelRedirects.length > 0 ? state.routing.modelRedirects : null,
           allowed_models:

@@ -386,6 +386,10 @@
       "help": "預設關閉以保護隱私；僅在需要上游感知終端 IP 時開啟。",
       "label": "透傳客戶端 IP"
     },
+    "downloadImageUrlToBase64": {
+      "label": "image_url 下載轉 base64",
+      "desc": "開啟後，代理會下載圖像請求中的遠端 image_url 並以 base64 內聯發送，上游無需再抓取該 URL。僅對 JSON 圖像請求生效。"
+    },
     "disableSessionReuse": {
       "label": "不遵循 Session 復用",
       "desc": "啟用後，下次請求不會繼續復用目前供應商的 sticky 綁定，而會重新走優先級與健康檢查。適合高優先級便宜通道恢復後盡快切回的場景。"

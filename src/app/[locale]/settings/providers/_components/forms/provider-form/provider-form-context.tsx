@@ -78,6 +78,7 @@ const ACTION_TO_FIELD_PATH: Partial<Record<ProviderFormActionWith5hResetMode["ty
   SET_GROUP_TAG: "routing.groupTag",
   SET_PRESERVE_CLIENT_IP: "routing.preserveClientIp",
   SET_DISABLE_SESSION_REUSE: "routing.disableSessionReuse",
+  SET_DOWNLOAD_IMAGE_URL_TO_BASE64: "routing.downloadImageUrlToBase64",
   SET_MODEL_REDIRECTS: "routing.modelRedirects",
   SET_ALLOWED_MODELS: "routing.allowedModels",
   SET_ALLOWED_CLIENTS: "routing.allowedClients",
@@ -160,6 +161,7 @@ export function createInitialState(
           analysis.routing.disableSessionReuse.status === "uniform"
             ? analysis.routing.disableSessionReuse.value
             : false,
+        downloadImageUrlToBase64: false,
         modelRedirects:
           analysis.routing.modelRedirects.status === "uniform"
             ? analysis.routing.modelRedirects.value
@@ -351,6 +353,7 @@ export function createInitialState(
         groupTag: [],
         preserveClientIp: false,
         disableSessionReuse: false,
+        downloadImageUrlToBase64: false,
         modelRedirects: [],
         allowedModels: [],
         allowedClients: [],
@@ -429,6 +432,7 @@ export function createInitialState(
       groupTag: parseProviderGroups(sourceProvider?.groupTag),
       preserveClientIp: sourceProvider?.preserveClientIp ?? false,
       disableSessionReuse: sourceProvider?.disableSessionReuse ?? false,
+      downloadImageUrlToBase64: sourceProvider?.downloadImageUrlToBase64 ?? false,
       modelRedirects: normalizeProviderModelRedirectRules(sourceProvider?.modelRedirects) ?? [],
       allowedModels: normalizeAllowedModelRules(sourceProvider?.allowedModels) ?? [],
       allowedClients: sourceProvider?.allowedClients ?? [],
@@ -536,6 +540,11 @@ export function providerFormReducer(
       return { ...state, routing: { ...state.routing, preserveClientIp: action.payload } };
     case "SET_DISABLE_SESSION_REUSE":
       return { ...state, routing: { ...state.routing, disableSessionReuse: action.payload } };
+    case "SET_DOWNLOAD_IMAGE_URL_TO_BASE64":
+      return {
+        ...state,
+        routing: { ...state.routing, downloadImageUrlToBase64: action.payload },
+      };
     case "SET_MODEL_REDIRECTS":
       return { ...state, routing: { ...state.routing, modelRedirects: action.payload } };
     case "SET_ALLOWED_MODELS":

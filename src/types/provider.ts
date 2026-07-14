@@ -501,6 +501,8 @@ export interface ProviderDisplay {
   proxyFallbackToDirect: boolean;
   // 静态自定义请求头
   customHeaders: ProviderCustomHeaders | null;
+  // 图像 image_url 下载内联为 base64 开关
+  downloadImageUrlToBase64?: boolean;
   // 超时配置（毫秒）
   firstByteTimeoutStreamingMs: number;
   streamingIdleTimeoutMs: number;
