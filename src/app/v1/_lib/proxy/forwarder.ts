@@ -94,6 +94,7 @@ import {
   resolveAzureDeployment,
   resolveAzureImageApiVersion,
 } from "./azure-image-adapter";
+import { inlineImageUrlsInImageBody } from "./image-url-inliner";
 import { ensureOpenAIChatStreamUsageOption } from "./openai-chat-usage-options";
 import {
   cloneOpenAIImageRequestMetadata,
@@ -2903,6 +2904,19 @@ export class ProxyForwarder {
           }
 
           ensureOpenAIChatStreamUsageOption(messageToSend, provider.providerType, requestPath);
+
+          // Optional: download remote image_url values and inline them as base64 so
+          // the upstream never has to fetch remote URLs. Gated by a provider toggle.
+          if (provider.downloadImageUrlToBase64 && getOpenAIImageEndpoint(requestPath) !== null) {
+            try {
+              await inlineImageUrlsInImageBody(messageToSend);
+            } catch (error) {
+              throw new ProxyError(
+                error instanceof Error ? error.message : "Failed to inline image_url.",
+                400
+              );
+            }
+          }
 
           const validation = await validateOpenAIImageRequest({
             pathname: requestPath,
