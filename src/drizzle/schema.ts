@@ -294,6 +294,9 @@ export const providers = pgTable('providers', {
   // null = 使用内置默认版本表（generations/edits）
   azureImageApiVersions: jsonb('azure_image_api_versions').$type<Record<string, string> | null>().default(null),
 
+  // 开启后代理下载图像请求体里的 image_url 并内联为 base64（仅 JSON 图像端点）
+  downloadImageUrlToBase64: boolean('download_image_url_to_base64').notNull().default(false),
+
   // 超时配置（毫秒）
   // 注意：由于 undici fetch API 的限制，无法精确分离 DNS/TCP/TLS 连接阶段和响应头接收阶段
   // 参考：https://github.com/nodejs/undici/discussions/1313

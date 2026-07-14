@@ -616,6 +616,8 @@ export const CreateProviderSchema = z
     proxy_fallback_to_direct: z.boolean().optional().default(false),
     // 静态自定义请求头
     custom_headers: PROVIDER_CUSTOM_HEADERS_SCHEMA,
+    // 图像 image_url 下载内联为 base64 开关
+    download_image_url_to_base64: z.boolean().optional(),
     // 超时配置（毫秒）
     // 注意：0 表示禁用超时（Infinity）
     first_byte_timeout_streaming_ms: z
@@ -863,6 +865,8 @@ export const UpdateProviderSchema = z
     proxy_fallback_to_direct: z.boolean().optional(),
     // 静态自定义请求头
     custom_headers: PROVIDER_CUSTOM_HEADERS_SCHEMA,
+    // 图像 image_url 下载内联为 base64 开关
+    download_image_url_to_base64: z.boolean().optional(),
     // 超时配置（毫秒）
     // 注意：0 表示禁用超时（Infinity）
     first_byte_timeout_streaming_ms: z

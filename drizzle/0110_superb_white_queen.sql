@@ -1,0 +1,1 @@
+ALTER TABLE "providers" ADD COLUMN "download_image_url_to_base64" boolean DEFAULT false NOT NULL;
