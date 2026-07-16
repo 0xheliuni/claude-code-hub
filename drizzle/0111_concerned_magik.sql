@@ -1,0 +1,1 @@
+ALTER TABLE "providers" ADD COLUMN "convert_image_json_to_multipart" boolean DEFAULT false NOT NULL;

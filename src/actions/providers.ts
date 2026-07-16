@@ -335,6 +335,7 @@ export async function getProviders(): Promise<ProviderDisplay[]> {
         preserveClientIp: provider.preserveClientIp,
         disableSessionReuse: provider.disableSessionReuse,
         downloadImageUrlToBase64: provider.downloadImageUrlToBase64,
+        convertImageJsonToMultipart: provider.convertImageJsonToMultipart,
         modelRedirects: provider.modelRedirects,
         activeTimeStart: provider.activeTimeStart,
         activeTimeEnd: provider.activeTimeEnd,

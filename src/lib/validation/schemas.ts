@@ -618,6 +618,7 @@ export const CreateProviderSchema = z
     custom_headers: PROVIDER_CUSTOM_HEADERS_SCHEMA,
     // 图像 image_url 下载内联为 base64 开关
     download_image_url_to_base64: z.boolean().optional(),
+    convert_image_json_to_multipart: z.boolean().optional(),
     // 超时配置（毫秒）
     // 注意：0 表示禁用超时（Infinity）
     first_byte_timeout_streaming_ms: z
@@ -867,6 +868,7 @@ export const UpdateProviderSchema = z
     custom_headers: PROVIDER_CUSTOM_HEADERS_SCHEMA,
     // 图像 image_url 下载内联为 base64 开关
     download_image_url_to_base64: z.boolean().optional(),
+    convert_image_json_to_multipart: z.boolean().optional(),
     // 超时配置（毫秒）
     // 注意：0 表示禁用超时（Infinity）
     first_byte_timeout_streaming_ms: z

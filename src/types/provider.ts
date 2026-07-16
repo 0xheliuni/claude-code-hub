@@ -397,6 +397,7 @@ export interface Provider {
 
   // 开启后, 代理会把图像请求体里的 image_url 远程 URL 下载并内联为 base64（仅 JSON 图像端点）
   downloadImageUrlToBase64?: boolean;
+  convertImageJsonToMultipart?: boolean;
 
   // 超时配置（毫秒）
   firstByteTimeoutStreamingMs: number;
@@ -503,6 +504,7 @@ export interface ProviderDisplay {
   customHeaders: ProviderCustomHeaders | null;
   // 图像 image_url 下载内联为 base64 开关
   downloadImageUrlToBase64?: boolean;
+  convertImageJsonToMultipart?: boolean;
   // 超时配置（毫秒）
   firstByteTimeoutStreamingMs: number;
   streamingIdleTimeoutMs: number;
@@ -622,6 +624,7 @@ export interface CreateProviderData {
   // 静态自定义请求头
   custom_headers?: ProviderCustomHeaders | null;
   download_image_url_to_base64?: boolean;
+  convert_image_json_to_multipart?: boolean;
 
   // 超时配置（毫秒）
   first_byte_timeout_streaming_ms?: number;
@@ -708,6 +711,7 @@ export interface UpdateProviderData {
   // 静态自定义请求头
   custom_headers?: ProviderCustomHeaders | null;
   download_image_url_to_base64?: boolean;
+  convert_image_json_to_multipart?: boolean;
 
   // 超时配置（毫秒）
   first_byte_timeout_streaming_ms?: number;

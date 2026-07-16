@@ -296,6 +296,7 @@ export const providers = pgTable('providers', {
 
   // 开启后代理下载图像请求体里的 image_url 并内联为 base64（仅 JSON 图像端点）
   downloadImageUrlToBase64: boolean('download_image_url_to_base64').notNull().default(false),
+  convertImageJsonToMultipart: boolean('convert_image_json_to_multipart').notNull().default(false),
 
   // 超时配置（毫秒）
   // 注意：由于 undici fetch API 的限制，无法精确分离 DNS/TCP/TLS 连接阶段和响应头接收阶段

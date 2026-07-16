@@ -135,6 +135,7 @@ export function toProvider(dbProvider: any): Provider {
     customHeaders: dbProvider?.customHeaders ?? null,
     azureImageApiVersions: dbProvider?.azureImageApiVersions ?? null,
     downloadImageUrlToBase64: dbProvider?.downloadImageUrlToBase64 ?? false,
+    convertImageJsonToMultipart: dbProvider?.convertImageJsonToMultipart ?? false,
     firstByteTimeoutStreamingMs:
       dbProvider?.firstByteTimeoutStreamingMs ??
       PROVIDER_TIMEOUT_DEFAULTS.FIRST_BYTE_TIMEOUT_STREAMING_MS,

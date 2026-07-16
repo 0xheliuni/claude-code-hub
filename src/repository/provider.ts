@@ -236,6 +236,7 @@ export async function createProvider(providerData: CreateProviderData): Promise<
     proxyFallbackToDirect: providerData.proxy_fallback_to_direct ?? false,
     customHeaders: providerData.custom_headers ?? null,
     downloadImageUrlToBase64: providerData.download_image_url_to_base64 ?? false,
+    convertImageJsonToMultipart: providerData.convert_image_json_to_multipart ?? false,
     firstByteTimeoutStreamingMs:
       providerData.first_byte_timeout_streaming_ms ??
       PROVIDER_TIMEOUT_DEFAULTS.FIRST_BYTE_TIMEOUT_STREAMING_MS,
@@ -323,6 +324,7 @@ export async function createProvider(providerData: CreateProviderData): Promise<
         customHeaders: providers.customHeaders,
         azureImageApiVersions: providers.azureImageApiVersions,
         downloadImageUrlToBase64: providers.downloadImageUrlToBase64,
+        convertImageJsonToMultipart: providers.convertImageJsonToMultipart,
         firstByteTimeoutStreamingMs: providers.firstByteTimeoutStreamingMs,
         streamingIdleTimeoutMs: providers.streamingIdleTimeoutMs,
         requestTimeoutNonStreamingMs: providers.requestTimeoutNonStreamingMs,
@@ -414,6 +416,7 @@ export async function findProviderList(
       customHeaders: providers.customHeaders,
       azureImageApiVersions: providers.azureImageApiVersions,
       downloadImageUrlToBase64: providers.downloadImageUrlToBase64,
+      convertImageJsonToMultipart: providers.convertImageJsonToMultipart,
       firstByteTimeoutStreamingMs: providers.firstByteTimeoutStreamingMs,
       streamingIdleTimeoutMs: providers.streamingIdleTimeoutMs,
       requestTimeoutNonStreamingMs: providers.requestTimeoutNonStreamingMs,
@@ -505,6 +508,7 @@ export async function findAllProvidersFresh(): Promise<Provider[]> {
       customHeaders: providers.customHeaders,
       azureImageApiVersions: providers.azureImageApiVersions,
       downloadImageUrlToBase64: providers.downloadImageUrlToBase64,
+      convertImageJsonToMultipart: providers.convertImageJsonToMultipart,
       firstByteTimeoutStreamingMs: providers.firstByteTimeoutStreamingMs,
       streamingIdleTimeoutMs: providers.streamingIdleTimeoutMs,
       requestTimeoutNonStreamingMs: providers.requestTimeoutNonStreamingMs,
@@ -600,6 +604,7 @@ export async function findProviderById(id: number): Promise<Provider | null> {
       customHeaders: providers.customHeaders,
       azureImageApiVersions: providers.azureImageApiVersions,
       downloadImageUrlToBase64: providers.downloadImageUrlToBase64,
+      convertImageJsonToMultipart: providers.convertImageJsonToMultipart,
       firstByteTimeoutStreamingMs: providers.firstByteTimeoutStreamingMs,
       streamingIdleTimeoutMs: providers.streamingIdleTimeoutMs,
       requestTimeoutNonStreamingMs: providers.requestTimeoutNonStreamingMs,
@@ -717,6 +722,8 @@ export async function updateProvider(
     dbData.customHeaders = providerData.custom_headers ?? null;
   if (providerData.download_image_url_to_base64 !== undefined)
     dbData.downloadImageUrlToBase64 = providerData.download_image_url_to_base64;
+  if (providerData.convert_image_json_to_multipart !== undefined)
+    dbData.convertImageJsonToMultipart = providerData.convert_image_json_to_multipart;
   if (providerData.first_byte_timeout_streaming_ms !== undefined)
     dbData.firstByteTimeoutStreamingMs = providerData.first_byte_timeout_streaming_ms;
   if (providerData.streaming_idle_timeout_ms !== undefined)
@@ -855,6 +862,7 @@ export async function updateProvider(
         customHeaders: providers.customHeaders,
         azureImageApiVersions: providers.azureImageApiVersions,
         downloadImageUrlToBase64: providers.downloadImageUrlToBase64,
+        convertImageJsonToMultipart: providers.convertImageJsonToMultipart,
         firstByteTimeoutStreamingMs: providers.firstByteTimeoutStreamingMs,
         streamingIdleTimeoutMs: providers.streamingIdleTimeoutMs,
         requestTimeoutNonStreamingMs: providers.requestTimeoutNonStreamingMs,

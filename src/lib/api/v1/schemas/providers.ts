@@ -43,6 +43,9 @@ export const ProviderSummarySchema = z
     downloadImageUrlToBase64: z
       .boolean()
       .describe("Whether the proxy downloads image_url and inlines it as base64."),
+    convertImageJsonToMultipart: z
+      .boolean()
+      .describe("Whether the proxy converts JSON image/edits to multipart."),
     modelRedirects: z.array(z.unknown()).nullable().describe("Model redirect rules."),
     activeTimeStart: NullableStringSchema.describe("Scheduled active start time in HH:mm."),
     activeTimeEnd: NullableStringSchema.describe("Scheduled active end time in HH:mm."),
@@ -379,6 +382,10 @@ export const ProviderCreateSchema = z
       .boolean()
       .optional()
       .describe("Whether the proxy downloads image_url and inlines it as base64."),
+    convert_image_json_to_multipart: z
+      .boolean()
+      .optional()
+      .describe("Whether the proxy converts JSON image/edits to multipart."),
     model_redirects: z.array(z.unknown()).nullable().optional().describe("Model redirect rules."),
     active_time_start: TimeOfDaySchema.nullable()
       .optional()
