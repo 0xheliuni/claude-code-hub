@@ -95,6 +95,7 @@ import {
   resolveAzureImageApiVersion,
 } from "./azure-image-adapter";
 import { inlineImageUrlsInImageBody } from "./image-url-inliner";
+import { buildImageEditsMultipart } from "./image-json-to-multipart";
 import { ensureOpenAIChatStreamUsageOption } from "./openai-chat-usage-options";
 import {
   cloneOpenAIImageRequestMetadata,
@@ -2907,7 +2908,12 @@ export class ProxyForwarder {
 
           // Optional: download remote image_url values and inline them as base64 so
           // the upstream never has to fetch remote URLs. Gated by a provider toggle.
-          if (provider.downloadImageUrlToBase64 && getOpenAIImageEndpoint(requestPath) !== null) {
+          // Skipped when convertImageJsonToMultipart is on (multipart path handles images).
+          if (
+            !provider.convertImageJsonToMultipart &&
+            provider.downloadImageUrlToBase64 &&
+            getOpenAIImageEndpoint(requestPath) !== null
+          ) {
             try {
               await inlineImageUrlsInImageBody(messageToSend);
             } catch (error) {
@@ -2927,15 +2933,34 @@ export class ProxyForwarder {
             throw new ProxyError(validation.message ?? "Invalid request.", 400);
           }
 
-          const bodyString = JSON.stringify(messageToSend);
-          requestBody = bodyString;
-          session.forwardedRequestBody = bodyString;
+          if (provider.convertImageJsonToMultipart && requestPath === "/v1/images/edits") {
+            // Convert the JSON edits body into multipart/form-data for vendors that
+            // only accept multipart (image[] file fields).
+            try {
+              const multipart = await buildImageEditsMultipart(messageToSend);
+              requestBody = multipart.body;
+              session.forwardedRequestBody = "[multipart/form-data converted from JSON]";
+              processedHeaders.set("content-type", multipart.contentType);
+              isStreaming = false;
+            } catch (error) {
+              throw new ProxyError(
+                error instanceof Error
+                  ? error.message
+                  : "Failed to convert image request to multipart.",
+                400
+              );
+            }
+          } else {
+            const bodyString = JSON.stringify(messageToSend);
+            requestBody = bodyString;
+            session.forwardedRequestBody = bodyString;
 
-          try {
-            const parsed = JSON.parse(bodyString);
-            isStreaming = parsed.stream === true;
-          } catch {
-            isStreaming = false;
+            try {
+              const parsed = JSON.parse(bodyString);
+              isStreaming = parsed.stream === true;
+            } catch {
+              isStreaming = false;
+            }
           }
 
           if (process.env.NODE_ENV === "development") {
@@ -2945,8 +2970,8 @@ export class ProxyForwarder {
               proxyUrl: proxyUrl,
               format: session.originalFormat,
               method: session.method,
-              bodyLength: bodyString.length,
-              bodyPreview: bodyString.slice(0, 1000),
+              bodyLength: session.forwardedRequestBody?.length ?? 0,
+              bodyPreview: session.forwardedRequestBody?.slice(0, 1000),
               isStreaming,
             });
           }
