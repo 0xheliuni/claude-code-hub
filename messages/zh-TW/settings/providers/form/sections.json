@@ -390,6 +390,10 @@
       "label": "image_url 下載轉 base64",
       "desc": "開啟後，代理會下載圖像請求中的遠端 image_url 並以 base64 內聯發送，上游無需再抓取該 URL。僅對 JSON 圖像請求生效。"
     },
+    "convertImageJsonToMultipart": {
+      "label": "JSON 改圖請求轉 multipart",
+      "desc": "開啟後，JSON 的 /v1/images/edits 請求會先轉換成 multipart/form-data（image[] 檔案）再轉發。用於只接受 multipart 的供應商。"
+    },
     "disableSessionReuse": {
       "label": "不遵循 Session 復用",
       "desc": "啟用後，下次請求不會繼續復用目前供應商的 sticky 綁定，而會重新走優先級與健康檢查。適合高優先級便宜通道恢復後盡快切回的場景。"

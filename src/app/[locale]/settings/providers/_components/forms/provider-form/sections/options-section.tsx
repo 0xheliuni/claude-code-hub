@@ -104,6 +104,24 @@ export function OptionsSection({ subSectionRefs }: OptionsSectionProps) {
                 />
               </ToggleRow>
 
+              <ToggleRow
+                label={t("sections.routing.convertImageJsonToMultipart.label")}
+                description={t("sections.routing.convertImageJsonToMultipart.desc")}
+              >
+                <Switch
+                  id={
+                    isEdit
+                      ? "edit-convert-image-json-to-multipart"
+                      : "convert-image-json-to-multipart"
+                  }
+                  checked={state.routing.convertImageJsonToMultipart}
+                  onCheckedChange={(checked) =>
+                    dispatch({ type: "SET_CONVERT_IMAGE_JSON_TO_MULTIPART", payload: checked })
+                  }
+                  disabled={state.ui.isPending}
+                />
+              </ToggleRow>
+
               {/* Swap Cache TTL Billing */}
               <ToggleRow
                 label={t("sections.routing.swapCacheTtlBilling.label")}

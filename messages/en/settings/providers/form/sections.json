@@ -390,6 +390,10 @@
       "label": "Download image_url to base64",
       "desc": "When enabled, the proxy downloads remote image_url values in image requests and sends them inline as base64, so the upstream never fetches the URL. JSON image requests only."
     },
+    "convertImageJsonToMultipart": {
+      "label": "Convert JSON image edits to multipart",
+      "desc": "When on, JSON /v1/images/edits requests are converted to multipart/form-data (image[] files) before forwarding. For vendors that only accept multipart."
+    },
     "disableSessionReuse": {
       "label": "Skip session reuse",
       "desc": "When enabled, the next request will ignore this provider's sticky binding and rerun priority and health checks. Useful when a cheap higher-priority provider should be retried as soon as it recovers."

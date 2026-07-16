@@ -53,6 +53,7 @@ export interface RoutingState {
   preserveClientIp: boolean;
   disableSessionReuse: boolean;
   downloadImageUrlToBase64: boolean;
+  convertImageJsonToMultipart: boolean;
   modelRedirects: ProviderModelRedirectRule[];
   allowedModels: AllowedModelRule[];
   allowedClients: string[];
@@ -150,6 +151,7 @@ export type ProviderFormAction =
   | { type: "SET_PRESERVE_CLIENT_IP"; payload: boolean }
   | { type: "SET_DISABLE_SESSION_REUSE"; payload: boolean }
   | { type: "SET_DOWNLOAD_IMAGE_URL_TO_BASE64"; payload: boolean }
+  | { type: "SET_CONVERT_IMAGE_JSON_TO_MULTIPART"; payload: boolean }
   | { type: "SET_MODEL_REDIRECTS"; payload: ProviderModelRedirectRule[] }
   | { type: "SET_ALLOWED_MODELS"; payload: AllowedModelRule[] }
   | { type: "SET_ALLOWED_CLIENTS"; payload: string[] }

@@ -390,6 +390,10 @@
       "label": "image_url を base64 に変換",
       "desc": "有効にすると、プロキシが画像リクエスト内のリモート image_url をダウンロードし、base64 としてインラインで送信します。上流は URL を取得する必要がありません。JSON 画像リクエストのみ対象です。"
     },
+    "convertImageJsonToMultipart": {
+      "label": "JSON 画像編集を multipart に変換",
+      "desc": "有効にすると、JSON の /v1/images/edits リクエストを転送前に multipart/form-data（image[] ファイル）へ変換します。multipart のみ受け付けるベンダー向けです。"
+    },
     "disableSessionReuse": {
       "label": "セッション再利用をスキップ",
       "desc": "有効にすると、次回リクエストではこのプロバイダーの sticky binding を再利用せず、優先度とヘルスチェックをやり直します。安価な高優先度プロバイダーの復旧後に早く戻したい場合に適しています。"
