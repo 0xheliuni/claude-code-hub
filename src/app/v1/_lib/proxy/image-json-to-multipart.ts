@@ -96,9 +96,7 @@ export async function buildImageEditsMultipart(
   }
 
   if (index === 0) {
-    throw new ImageFetchError(
-      "images/edits multipart conversion requires at least one image_url."
-    );
+    throw new ImageFetchError("images/edits multipart conversion requires at least one image_url.");
   }
 
   if (body.mask && typeof body.mask === "object" && !Array.isArray(body.mask)) {

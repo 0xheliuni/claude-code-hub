@@ -94,7 +94,9 @@ export async function fetchImageBytes(
   }
   const mime = (res.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
   if (!mime.startsWith("image/")) {
-    throw new ImageFetchError(`${url} did not return an image (content-type: ${mime || "unknown"})`);
+    throw new ImageFetchError(
+      `${url} did not return an image (content-type: ${mime || "unknown"})`
+    );
   }
   const buffer = await res.arrayBuffer();
   if (buffer.byteLength > maxBytes) {

@@ -61,7 +61,9 @@ describe("image-fetch", () => {
       "http://169.254.169.254/a.png",
       "http://localhost/a.png",
     ]) {
-      await expect(fetchImageBytes(u, { fetchImpl: okPng })).rejects.toBeInstanceOf(ImageFetchError);
+      await expect(fetchImageBytes(u, { fetchImpl: okPng })).rejects.toBeInstanceOf(
+        ImageFetchError
+      );
     }
   });
 });
