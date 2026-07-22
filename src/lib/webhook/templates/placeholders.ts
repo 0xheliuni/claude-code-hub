@@ -20,6 +20,7 @@ export const WEBHOOK_NOTIFICATION_TYPES = [
   "daily_leaderboard",
   "cost_alert",
   "cache_hit_rate_alert",
+  "patrol_alert",
 ] as const satisfies readonly WebhookNotificationType[];
 
 export const TEMPLATE_PLACEHOLDERS = {
@@ -74,6 +75,14 @@ export const TEMPLATE_PLACEHOLDERS = {
     { key: "{{cooldown_minutes}}", label: "冷却分钟", description: "cooldownMinutes" },
     { key: "{{top_n}}", label: "TopN", description: "topN" },
     { key: "{{generated_at}}", label: "生成时间", description: "ISO 8601 格式" },
+  ],
+  patrol_alert: [
+    { key: "{{provider_name}}", label: "供应商名称", description: "被巡检的供应商" },
+    { key: "{{provider_id}}", label: "供应商ID", description: "供应商数字ID" },
+    { key: "{{score}}", label: "巡检评分", description: "0-100" },
+    { key: "{{verdict}}", label: "判定结果", description: "pass/warning/critical/counterfeit" },
+    { key: "{{action}}", label: "执行动作", description: "none/circuit_open/disable/recovered" },
+    { key: "{{inspection_type}}", label: "检测类型", description: "quick_probe/deep_fingerprint" },
   ],
 } as const satisfies Record<string, readonly TemplatePlaceholder[]>;
 

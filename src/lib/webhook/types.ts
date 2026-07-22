@@ -162,7 +162,8 @@ export type WebhookNotificationType =
   | "circuit_breaker"
   | "daily_leaderboard"
   | "cost_alert"
-  | "cache_hit_rate_alert";
+  | "cache_hit_rate_alert"
+  | "patrol_alert";
 
 export interface WebhookTargetConfig {
   id?: number;

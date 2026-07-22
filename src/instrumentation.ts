@@ -480,6 +480,16 @@ export async function register() {
         });
       }
 
+      try {
+        const { startPatrolScheduler } = await import("@/lib/patrol");
+        startPatrolScheduler();
+        logger.info("[Instrumentation] Patrol scheduler started");
+      } catch (error) {
+        logger.warn("[Instrumentation] Failed to start patrol scheduler", {
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
+
       logger.info("Application ready");
     }
     // 开发环境: 执行迁移 + 初始化价格表（禁用 Bull Queue 避免 Turbopack 冲突）

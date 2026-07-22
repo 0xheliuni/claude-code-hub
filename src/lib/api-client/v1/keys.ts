@@ -144,4 +144,13 @@ export const v1Keys = {
     vendorCircuit: (vendorId: number, providerType: string) =>
       ["v1", "provider-endpoints", "vendor", vendorId, "circuit", providerType] as const,
   },
+  patrol: {
+    all: ["v1", "patrol"] as const,
+    status: () => ["v1", "patrol", "status"] as const,
+    results: (params?: Record<string, unknown>) =>
+      ["v1", "patrol", "results", params ?? {}] as const,
+    config: () => ["v1", "patrol", "config"] as const,
+    baselines: () => ["v1", "patrol", "baselines"] as const,
+    probes: () => ["v1", "patrol", "probes"] as const,
+  },
 } as const;

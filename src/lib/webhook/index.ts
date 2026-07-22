@@ -10,6 +10,7 @@ export {
   buildCircuitBreakerMessage,
   buildCostAlertMessage,
   buildDailyLeaderboardMessage,
+  buildPatrolAlertMessage,
 } from "./templates";
 export type {
   CacheHitRateAlertAnomaly,

@@ -817,6 +817,7 @@
     "userManagement": "Users",
     "providers": "Providers",
     "auditLogs": "Audit logs",
+    "patrol": "Patrol",
     "documentation": "Docs",
     "systemSettings": "Settings",
     "feedback": "Feedback",
@@ -2249,5 +2250,82 @@
     },
     "alreadySet": "Configured",
     "confirmAdd": "Add"
+  },
+  "patrol": {
+    "title": "Provider Patrol",
+    "description": "Automated provider health inspection and fingerprint verification",
+    "nav": "Patrol",
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "lastRun": "Last Run",
+      "never": "Never",
+      "providerCount": "Monitored Providers"
+    },
+    "actions": {
+      "trigger": "Run Now",
+      "triggerAll": "Run All Providers",
+      "triggerProvider": "Run Single Provider",
+      "recover": "Recover Provider",
+      "confirmRecover": "This will re-enable the provider. Continue?",
+      "recovered": "Provider recovered successfully"
+    },
+    "results": {
+      "title": "Inspection Results",
+      "empty": "No inspection results yet",
+      "score": "Score",
+      "verdict": "Verdict",
+      "provider": "Provider",
+      "type": "Type",
+      "action": "Action Taken",
+      "latency": "Latency",
+      "time": "Time",
+      "details": "Details"
+    },
+    "verdicts": {
+      "pass": "Pass",
+      "warning": "Warning",
+      "critical": "Critical",
+      "counterfeit": "Counterfeit"
+    },
+    "inspectionTypes": {
+      "quick_probe": "Quick Probe",
+      "deep_fingerprint": "Deep Fingerprint"
+    },
+    "actionTypes": {
+      "none": "None",
+      "circuit_open": "Circuit Opened",
+      "disable": "Disabled",
+      "notify_only": "Notified",
+      "recovered": "Recovered"
+    },
+    "config": {
+      "title": "Configuration",
+      "global": "Global Settings",
+      "provider": "Provider Override",
+      "thresholds": "Thresholds",
+      "scheduling": "Scheduling",
+      "recovery": "Auto Recovery",
+      "notifications": "Notifications",
+      "save": "Save Configuration",
+      "saved": "Configuration saved",
+      "reset": "Reset to Defaults"
+    },
+    "baselines": {
+      "title": "Fingerprint Baselines",
+      "empty": "No baselines calibrated yet",
+      "model": "Model",
+      "providerType": "Provider Type",
+      "samples": "Samples",
+      "calibratedAt": "Calibrated",
+      "delete": "Delete",
+      "confirmDelete": "Delete this baseline?"
+    },
+    "probes": {
+      "title": "Detection Probes",
+      "name": "Probe",
+      "category": "Category",
+      "weight": "Weight"
+    }
   }
 }

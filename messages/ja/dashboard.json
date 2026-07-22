@@ -815,6 +815,7 @@
     "userManagement": "ユーザー",
     "providers": "プロバイダー管理",
     "auditLogs": "監査ログ",
+    "patrol": "巡回",
     "documentation": "ドキュ",
     "systemSettings": "設定",
     "feedback": "フィードバック",
@@ -2178,5 +2179,82 @@
     },
     "alreadySet": "設定済み",
     "confirmAdd": "追加"
+  },
+  "patrol": {
+    "title": "プロバイダー巡回",
+    "description": "プロバイダーの健全性検査とフィンガープリント検証の自動化",
+    "nav": "巡回",
+    "status": {
+      "enabled": "有効",
+      "disabled": "無効",
+      "lastRun": "最終実行",
+      "never": "未実行",
+      "providerCount": "監視プロバイダー数"
+    },
+    "actions": {
+      "trigger": "今すぐ実行",
+      "triggerAll": "全プロバイダー検査",
+      "triggerProvider": "単一プロバイダー検査",
+      "recover": "プロバイダー復旧",
+      "confirmRecover": "プロバイダーを再有効化します。続行しますか？",
+      "recovered": "プロバイダーが正常に復旧しました"
+    },
+    "results": {
+      "title": "検査結果",
+      "empty": "検査結果はまだありません",
+      "score": "スコア",
+      "verdict": "判定",
+      "provider": "プロバイダー",
+      "type": "タイプ",
+      "action": "実行アクション",
+      "latency": "レイテンシ",
+      "time": "時刻",
+      "details": "詳細"
+    },
+    "verdicts": {
+      "pass": "合格",
+      "warning": "警告",
+      "critical": "重大",
+      "counterfeit": "偽造"
+    },
+    "inspectionTypes": {
+      "quick_probe": "クイックプローブ",
+      "deep_fingerprint": "ディープフィンガープリント"
+    },
+    "actionTypes": {
+      "none": "なし",
+      "circuit_open": "サーキット開放",
+      "disable": "無効化済み",
+      "notify_only": "通知のみ",
+      "recovered": "復旧済み"
+    },
+    "config": {
+      "title": "設定",
+      "global": "グローバル設定",
+      "provider": "プロバイダー上書き",
+      "thresholds": "しきい値",
+      "scheduling": "スケジューリング",
+      "recovery": "自動復旧",
+      "notifications": "通知",
+      "save": "設定を保存",
+      "saved": "設定が保存されました",
+      "reset": "デフォルトにリセット"
+    },
+    "baselines": {
+      "title": "フィンガープリントベースライン",
+      "empty": "校正済みベースラインはありません",
+      "model": "モデル",
+      "providerType": "プロバイダータイプ",
+      "samples": "サンプル数",
+      "calibratedAt": "校正日時",
+      "delete": "削除",
+      "confirmDelete": "このベースラインを削除しますか？"
+    },
+    "probes": {
+      "title": "検出プローブ",
+      "name": "プローブ",
+      "category": "カテゴリ",
+      "weight": "重み"
+    }
   }
 }
