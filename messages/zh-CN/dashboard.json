@@ -817,6 +817,7 @@
     "quotasManagement": "限额管理",
     "providers": "供应商管理",
     "auditLogs": "审计日志",
+    "patrol": "巡检",
     "documentation": "文档",
     "systemSettings": "系统设置",
     "feedback": "反馈问题",
@@ -2201,5 +2202,82 @@
     },
     "alreadySet": "已配置",
     "confirmAdd": "添加"
+  },
+  "patrol": {
+    "title": "供应商巡检",
+    "description": "自动化供应商健康检测与指纹验证",
+    "nav": "巡检",
+    "status": {
+      "enabled": "已启用",
+      "disabled": "已禁用",
+      "lastRun": "上次运行",
+      "never": "从未运行",
+      "providerCount": "监控供应商数"
+    },
+    "actions": {
+      "trigger": "立即运行",
+      "triggerAll": "全部巡检",
+      "triggerProvider": "单个巡检",
+      "recover": "恢复供应商",
+      "confirmRecover": "将重新启用该供应商，是否继续？",
+      "recovered": "供应商已成功恢复"
+    },
+    "results": {
+      "title": "巡检结果",
+      "empty": "暂无巡检结果",
+      "score": "评分",
+      "verdict": "判定",
+      "provider": "供应商",
+      "type": "类型",
+      "action": "执行动作",
+      "latency": "延迟",
+      "time": "时间",
+      "details": "详情"
+    },
+    "verdicts": {
+      "pass": "通过",
+      "warning": "警告",
+      "critical": "严重",
+      "counterfeit": "仿冒"
+    },
+    "inspectionTypes": {
+      "quick_probe": "快速探测",
+      "deep_fingerprint": "深度指纹"
+    },
+    "actionTypes": {
+      "none": "无",
+      "circuit_open": "熔断开启",
+      "disable": "已禁用",
+      "notify_only": "仅通知",
+      "recovered": "已恢复"
+    },
+    "config": {
+      "title": "配置",
+      "global": "全局设置",
+      "provider": "供应商覆盖",
+      "thresholds": "阈值",
+      "scheduling": "调度",
+      "recovery": "自动恢复",
+      "notifications": "通知",
+      "save": "保存配置",
+      "saved": "配置已保存",
+      "reset": "重置为默认"
+    },
+    "baselines": {
+      "title": "指纹基线",
+      "empty": "暂无校准基线",
+      "model": "模型",
+      "providerType": "供应商类型",
+      "samples": "样本数",
+      "calibratedAt": "校准时间",
+      "delete": "删除",
+      "confirmDelete": "确定删除该基线？"
+    },
+    "probes": {
+      "title": "检测探针",
+      "name": "探针",
+      "category": "分类",
+      "weight": "权重"
+    }
   }
 }

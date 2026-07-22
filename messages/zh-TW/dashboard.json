@@ -815,6 +815,7 @@
     "userManagement": "使用者管理",
     "providers": "供應商管理",
     "auditLogs": "稽核日誌",
+    "patrol": "巡檢",
     "documentation": "文件",
     "systemSettings": "系統設定",
     "feedback": "意見回饋",
@@ -2186,5 +2187,82 @@
     },
     "alreadySet": "已設定",
     "confirmAdd": "新增"
+  },
+  "patrol": {
+    "title": "供應商巡檢",
+    "description": "自動化供應商健康檢測與指紋驗證",
+    "nav": "巡檢",
+    "status": {
+      "enabled": "已啟用",
+      "disabled": "已停用",
+      "lastRun": "上次執行",
+      "never": "從未執行",
+      "providerCount": "監控供應商數"
+    },
+    "actions": {
+      "trigger": "立即執行",
+      "triggerAll": "全部巡檢",
+      "triggerProvider": "單一巡檢",
+      "recover": "恢復供應商",
+      "confirmRecover": "將重新啟用該供應商，是否繼續？",
+      "recovered": "供應商已成功恢復"
+    },
+    "results": {
+      "title": "巡檢結果",
+      "empty": "尚無巡檢結果",
+      "score": "評分",
+      "verdict": "判定",
+      "provider": "供應商",
+      "type": "類型",
+      "action": "執行動作",
+      "latency": "延遲",
+      "time": "時間",
+      "details": "詳情"
+    },
+    "verdicts": {
+      "pass": "通過",
+      "warning": "警告",
+      "critical": "嚴重",
+      "counterfeit": "仿冒"
+    },
+    "inspectionTypes": {
+      "quick_probe": "快速探測",
+      "deep_fingerprint": "深度指紋"
+    },
+    "actionTypes": {
+      "none": "無",
+      "circuit_open": "熔斷開啟",
+      "disable": "已停用",
+      "notify_only": "僅通知",
+      "recovered": "已恢復"
+    },
+    "config": {
+      "title": "設定",
+      "global": "全域設定",
+      "provider": "供應商覆蓋",
+      "thresholds": "閾值",
+      "scheduling": "排程",
+      "recovery": "自動恢復",
+      "notifications": "通知",
+      "save": "儲存設定",
+      "saved": "設定已儲存",
+      "reset": "重設為預設"
+    },
+    "baselines": {
+      "title": "指紋基線",
+      "empty": "尚無校準基線",
+      "model": "模型",
+      "providerType": "供應商類型",
+      "samples": "樣本數",
+      "calibratedAt": "校準時間",
+      "delete": "刪除",
+      "confirmDelete": "確定刪除該基線？"
+    },
+    "probes": {
+      "title": "偵測探針",
+      "name": "探針",
+      "category": "分類",
+      "weight": "權重"
+    }
   }
 }
