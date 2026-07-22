@@ -1,17 +1,30 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { getDefaultConfig } from "@/lib/patrol/config";
 
+const mockUpdate = vi.fn();
+const mockSet = vi.fn();
+const mockWhere = vi.fn();
+
 vi.mock("@/lib/circuit-breaker", () => ({
   recordFailure: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("@/drizzle/db", () => ({
   db: {
-    update: vi.fn().mockReturnValue({
-      set: vi.fn().mockReturnValue({
-        where: vi.fn().mockResolvedValue(undefined),
-      }),
-    }),
+    update: (...args: unknown[]) => {
+      mockUpdate(...args);
+      return {
+        set: (...sArgs: unknown[]) => {
+          mockSet(...sArgs);
+          return {
+            where: (...wArgs: unknown[]) => {
+              mockWhere(...wArgs);
+              return Promise.resolve(undefined);
+            },
+          };
+        },
+      };
+    },
   },
 }));
 
@@ -48,12 +61,11 @@ describe("patrol actions", () => {
 
   it("disables provider on critical with default config", async () => {
     const { executeAction } = await import("@/lib/patrol/actions");
-    const { db } = await import("@/drizzle/db");
     const config = getDefaultConfig();
 
     const action = await executeAction(2, "critical", config);
     expect(action).toBe("disable");
-    expect(db.update).toHaveBeenCalled();
+    expect(mockUpdate).toHaveBeenCalled();
   });
 
   it("returns none on pass without recovery needed", async () => {

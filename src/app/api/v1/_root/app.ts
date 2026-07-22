@@ -11,6 +11,7 @@ import { errorRulesRouter } from "../resources/error-rules/router";
 import { keysRouter } from "../resources/keys/router";
 import { meRouter } from "../resources/me/router";
 import { modelPricesRouter } from "../resources/model-prices/router";
+import { patrolRouter } from "../resources/patrol/router";
 import { notificationsRouter } from "../resources/notifications/router";
 import { providerEndpointsRouter } from "../resources/provider-endpoints/router";
 import { providerGroupsRouter } from "../resources/provider-groups/router";
@@ -155,5 +156,6 @@ app.route("/", usersRouter);
 app.route("/", keysRouter);
 app.route("/", usageLogsRouter);
 app.route("/", meRouter);
+app.route("/", patrolRouter);
 
 registerDocs(app);
