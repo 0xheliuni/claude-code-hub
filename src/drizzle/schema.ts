@@ -21,6 +21,7 @@ import type { AllowedModelRuleInput, ProviderModelRedirectRule, ProviderType } f
 import type { FilterOperation } from "@/lib/request-filter-types";
 import type { IpExtractionConfig } from "@/types/ip-extraction";
 import type { AuditCategory } from "@/types/audit-log";
+import type { PatrolProbeResult, FingerprintDetails, FingerprintStats } from "@/lib/patrol/types";
 
 // Enums
 export const dailyResetModeEnum = pgEnum('daily_reset_mode', ['fixed', 'rolling']);
@@ -36,6 +37,27 @@ export const notificationTypeEnum = pgEnum('notification_type', [
   'daily_leaderboard',
   'cost_alert',
   'cache_hit_rate_alert',
+  'patrol_alert',
+]);
+
+export const patrolVerdictEnum = pgEnum('patrol_verdict', [
+  'pass',
+  'warning',
+  'critical',
+  'counterfeit',
+]);
+
+export const patrolInspectionTypeEnum = pgEnum('patrol_inspection_type', [
+  'quick_probe',
+  'deep_fingerprint',
+]);
+
+export const patrolActionEnum = pgEnum('patrol_action', [
+  'none',
+  'circuit_open',
+  'disable',
+  'notify_only',
+  'recovered',
 ]);
 
 // Users table
@@ -1039,7 +1061,122 @@ export const notificationTargetBindings = pgTable(
   })
 );
 
-// Usage Ledger table - immutable audit log, no FK constraints, no deletedAt/updatedAt
+// Patrol Config table - global (providerId = null) and per-provider overrides
+export const patrolConfigs = pgTable(
+  'patrol_configs',
+  {
+    id: serial('id').primaryKey(),
+    providerId: integer('provider_id').references(() => providers.id, { onDelete: 'cascade' }),
+
+    enabled: boolean('enabled'),
+    quickProbeEnabled: boolean('quick_probe_enabled'),
+    quickProbeCron: varchar('quick_probe_cron', { length: 100 }),
+    quickProbeTimeoutMs: integer('quick_probe_timeout_ms'),
+    quickProbeProbes: jsonb('quick_probe_probes').$type<string[] | null>(),
+    deepFingerprintEnabled: boolean('deep_fingerprint_enabled'),
+    deepFingerprintCron: varchar('deep_fingerprint_cron', { length: 100 }),
+    deepFingerprintSamples: integer('deep_fingerprint_samples'),
+    deepFingerprintTimeoutMs: integer('deep_fingerprint_timeout_ms'),
+
+    thresholdPass: integer('threshold_pass'),
+    thresholdWarning: integer('threshold_warning'),
+    thresholdCritical: integer('threshold_critical'),
+    fingerprintMatchThreshold: numeric('fingerprint_match_threshold', { precision: 4, scale: 3 }),
+
+    actionOnWarning: varchar('action_on_warning', { length: 20 }),
+    actionOnCritical: varchar('action_on_critical', { length: 20 }),
+    actionOnCounterfeit: varchar('action_on_counterfeit', { length: 20 }),
+
+    autoRecoverEnabled: boolean('auto_recover_enabled'),
+    autoRecoverPasses: integer('auto_recover_passes'),
+    autoRecoverCounterfeit: boolean('auto_recover_counterfeit'),
+
+    notifyOnWarning: boolean('notify_on_warning'),
+    notifyOnCritical: boolean('notify_on_critical'),
+    notifyOnCounterfeit: boolean('notify_on_counterfeit'),
+    notifyOnRecovery: boolean('notify_on_recovery'),
+
+    concurrencyLimit: integer('concurrency_limit'),
+    retryAttempts: integer('retry_attempts'),
+    cooldownMinutes: integer('cooldown_minutes'),
+    probeWeights: jsonb('probe_weights').$type<Record<string, number> | null>(),
+
+    skipPatrol: boolean('skip_patrol').notNull().default(false),
+    expectedChannel: varchar('expected_channel', { length: 20 }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  },
+  (table) => ({
+    patrolConfigsProviderIdx: uniqueIndex('idx_patrol_configs_provider').on(table.providerId),
+  })
+);
+
+// Patrol Results table - inspection history
+export const patrolResults = pgTable(
+  'patrol_results',
+  {
+    id: serial('id').primaryKey(),
+    providerId: integer('provider_id')
+      .notNull()
+      .references(() => providers.id, { onDelete: 'cascade' }),
+    inspectionType: patrolInspectionTypeEnum('inspection_type').notNull(),
+    score: integer('score').notNull(),
+    verdict: patrolVerdictEnum('verdict').notNull(),
+    probeDetails: jsonb('probe_details').notNull().$type<PatrolProbeResult[]>(),
+    fingerprintDetails: jsonb('fingerprint_details').$type<FingerprintDetails | null>(),
+    actionTaken: patrolActionEnum('action_taken'),
+    latencyMs: integer('latency_ms'),
+    errorMessage: text('error_message'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  },
+  (table) => ({
+    patrolResultsProviderTimeIdx: index('idx_patrol_results_provider_time').on(
+      table.providerId,
+      table.createdAt
+    ),
+    patrolResultsVerdictIdx: index('idx_patrol_results_verdict').on(
+      table.verdict,
+      table.createdAt
+    ),
+  })
+);
+
+// Patrol Baselines table - fingerprint reference distributions
+export const patrolBaselines = pgTable(
+  'patrol_baselines',
+  {
+    id: serial('id').primaryKey(),
+    modelName: varchar('model_name', { length: 100 }).notNull(),
+    label: varchar('label', { length: 200 }),
+    providerType: varchar('provider_type', { length: 20 }).notNull(),
+    sampleCount: integer('sample_count').notNull(),
+    distribution: jsonb('distribution').notNull().$type<number[]>(),
+    stats: jsonb('stats').notNull().$type<FingerprintStats>(),
+    calibratedAt: timestamp('calibrated_at', { withTimezone: true }).defaultNow(),
+    calibratedBy: varchar('calibrated_by', { length: 100 }),
+    notes: text('notes'),
+  },
+  (table) => ({
+    patrolBaselinesModelIdx: uniqueIndex('idx_patrol_baselines_model').on(
+      table.modelName,
+      table.providerType
+    ),
+  })
+);
+
+// Patrol Provider State table - per-provider tracking
+export const patrolProviderState = pgTable('patrol_provider_state', {
+  providerId: integer('provider_id')
+    .primaryKey()
+    .references(() => providers.id, { onDelete: 'cascade' }),
+  consecutivePassCount: integer('consecutive_pass_count').notNull().default(0),
+  lastVerdict: patrolVerdictEnum('last_verdict'),
+  lastScore: integer('last_score'),
+  lastInspectedAt: timestamp('last_inspected_at', { withTimezone: true }),
+  patrolDisabledReason: text('patrol_disabled_reason'),
+  patrolDisabledAt: timestamp('patrol_disabled_at', { withTimezone: true }),
+});
 export const usageLedger = pgTable('usage_ledger', {
   id: serial('id').primaryKey(),
   requestId: integer('request_id').notNull(),
