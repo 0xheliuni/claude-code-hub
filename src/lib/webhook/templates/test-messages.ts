@@ -4,6 +4,7 @@ import { buildCacheHitRateAlertMessage } from "./cache-hit-rate-alert";
 import { buildCircuitBreakerMessage } from "./circuit-breaker";
 import { buildCostAlertMessage } from "./cost-alert";
 import { buildDailyLeaderboardMessage } from "./daily-leaderboard";
+import { buildPatrolAlertMessage } from "./patrol-alert";
 
 /**
  * 根据通知类型构建测试消息
@@ -96,6 +97,21 @@ export function buildTestMessage(type: NotificationJobType, timezone?: string): 
             topN: 10,
           },
           generatedAt: new Date().toISOString(),
+        },
+        timezone
+      );
+
+    case "patrol-alert":
+      return buildPatrolAlertMessage(
+        {
+          providerId: 1,
+          providerName: "测试供应商",
+          score: 35,
+          verdict: "critical",
+          actionTaken: "circuit_open",
+          failedProbes: ["connectivity", "model_echo"],
+          inspectionType: "quick_probe",
+          timestamp: new Date().toISOString(),
         },
         timezone
       );
