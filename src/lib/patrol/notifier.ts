@@ -1,7 +1,5 @@
 import type { PatrolActionType, PatrolConfig, PatrolProbeResult, PatrolVerdict } from "./types";
-import { createLogger } from "@/lib/logger";
-
-const logger = createLogger("patrol-notifier");
+import { logger } from "@/lib/logger";
 
 export interface PatrolAlertData {
   providerId: number;
@@ -85,7 +83,7 @@ export async function sendPatrolAlert(
       return;
     }
 
-    const { addNotificationJobForTarget } = await import("./notification/notification-queue");
+    const { addNotificationJobForTarget } = await import("@/lib/notification/notification-queue");
     for (const binding of bindings) {
       await addNotificationJobForTarget(
         "patrol-alert" as never,
