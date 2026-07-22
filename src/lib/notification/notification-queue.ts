@@ -10,6 +10,7 @@ import {
 } from "@/lib/notification/tasks/cache-hit-rate-alert";
 import { generateCostAlerts } from "@/lib/notification/tasks/cost-alert";
 import { generateDailyLeaderboard } from "@/lib/notification/tasks/daily-leaderboard";
+import type { PatrolAlertData } from "@/lib/patrol/notifier";
 import { buildRedisQueueOptions } from "@/lib/redis/bull-queue-options";
 import { resolveSystemTimezone } from "@/lib/utils/timezone";
 import {
@@ -17,6 +18,7 @@ import {
   buildCircuitBreakerMessage,
   buildCostAlertMessage,
   buildDailyLeaderboardMessage,
+  buildPatrolAlertMessage,
   type CacheHitRateAlertData,
   type CircuitBreakerAlertData,
   type CostAlertData,
@@ -37,7 +39,12 @@ export interface NotificationJobData {
   // 新模式使用（多目标）
   targetId?: number;
   bindingId?: number;
-  data?: CircuitBreakerAlertData | DailyLeaderboardData | CostAlertData | CacheHitRateAlertData; // 可选：定时任务会在执行时动态生成
+  data?:
+    | CircuitBreakerAlertData
+    | DailyLeaderboardData
+    | CostAlertData
+    | CacheHitRateAlertData
+    | PatrolAlertData;
 }
 
 function toWebhookNotificationType(type: NotificationJobType): WebhookNotificationType {
@@ -50,6 +57,8 @@ function toWebhookNotificationType(type: NotificationJobType): WebhookNotificati
       return "cost_alert";
     case "cache-hit-rate-alert":
       return "cache_hit_rate_alert";
+    case "patrol-alert":
+      return "patrol_alert";
   }
 }
 
@@ -395,6 +404,7 @@ function setupQueueProcessor(queue: Queue.Queue<NotificationJobData>): void {
         | DailyLeaderboardData
         | CostAlertData
         | CacheHitRateAlertData
+        | PatrolAlertData
         | undefined = data;
       let cooldownCommit: { keys: string[]; cooldownMinutes: number } | undefined;
       switch (type) {
@@ -544,6 +554,15 @@ function setupQueueProcessor(queue: Queue.Queue<NotificationJobData>): void {
           };
           break;
         }
+        case "patrol-alert": {
+          if (!data) {
+            logger.error({ action: "patrol_alert_missing_data", jobId: job.id });
+            return { success: true, skipped: true };
+          }
+          templateData = data;
+          message = buildPatrolAlertMessage(data as PatrolAlertData, timezone);
+          break;
+        }
         default:
           throw new Error(`Unknown notification type: ${type}`);
       }
@@ -647,7 +666,12 @@ function setupQueueProcessor(queue: Queue.Queue<NotificationJobData>): void {
 export async function addNotificationJob(
   type: NotificationJobType,
   webhookUrl: string,
-  data: CircuitBreakerAlertData | DailyLeaderboardData | CostAlertData | CacheHitRateAlertData
+  data:
+    | CircuitBreakerAlertData
+    | DailyLeaderboardData
+    | CostAlertData
+    | CacheHitRateAlertData
+    | PatrolAlertData
 ): Promise<void> {
   try {
     const queue = getNotificationQueue();
@@ -677,7 +701,12 @@ export async function addNotificationJobForTarget(
   type: NotificationJobType,
   targetId: number,
   bindingId: number | null,
-  data: CircuitBreakerAlertData | DailyLeaderboardData | CostAlertData | CacheHitRateAlertData
+  data:
+    | CircuitBreakerAlertData
+    | DailyLeaderboardData
+    | CostAlertData
+    | CacheHitRateAlertData
+    | PatrolAlertData
 ): Promise<void> {
   try {
     const queue = getNotificationQueue();

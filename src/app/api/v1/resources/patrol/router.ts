@@ -5,7 +5,6 @@ import { ProblemJsonSchema } from "@/lib/api/v1/schemas/_common";
 import {
   PatrolBaselineSchema,
   PatrolConfigSchema,
-  PatrolInspectionTypeSchema,
   PatrolProbeInfoSchema,
   PatrolResultSchema,
   PatrolStatusSchema,
@@ -75,7 +74,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  getPatrolStatus as never,
+  getPatrolStatus as never
 );
 
 // GET /patrol/results
@@ -114,7 +113,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  getPatrolResults as never,
+  getPatrolResults as never
 );
 
 // POST /patrol/trigger
@@ -144,7 +143,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  triggerPatrol as never,
+  triggerPatrol as never
 );
 
 // GET /patrol/config/global
@@ -166,7 +165,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  getGlobalConfig as never,
+  getGlobalConfig as never
 );
 
 // PUT /patrol/config/global
@@ -193,7 +192,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  updateGlobalConfig as never,
+  updateGlobalConfig as never
 );
 
 // PUT /patrol/config/provider/:providerId
@@ -221,7 +220,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  updateProviderConfig as never,
+  updateProviderConfig as never
 );
 
 // DELETE /patrol/config/provider/:providerId
@@ -248,7 +247,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  deleteProviderConfig as never,
+  deleteProviderConfig as never
 );
 
 // GET /patrol/baselines
@@ -270,7 +269,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  listBaselines as never,
+  listBaselines as never
 );
 
 // DELETE /patrol/baselines/:id
@@ -297,7 +296,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  deleteBaseline as never,
+  deleteBaseline as never
 );
 
 // POST /patrol/recover/:providerId
@@ -326,7 +325,7 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  recoverProvider as never,
+  recoverProvider as never
 );
 
 // GET /patrol/probes
@@ -348,5 +347,5 @@ patrolRouter.openapi(
       ...problemResponses,
     },
   }),
-  listProbes as never,
+  listProbes as never
 );

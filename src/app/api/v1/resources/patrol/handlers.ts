@@ -1,8 +1,8 @@
 import type { Context } from "hono";
-import { jsonResponse } from "@/lib/api/v1/_shared/response-helpers";
 import { createProblemResponse } from "@/lib/api/v1/_shared/error-envelope";
+import { jsonResponse } from "@/lib/api/v1/_shared/response-helpers";
 
-export async function getPatrolStatus(c: Context): Promise<Response> {
+export async function getPatrolStatus(_c: Context): Promise<Response> {
   const { resolveConfig } = await import("@/lib/patrol/config");
   const { getPatrolResults } = await import("@/repository/patrol-results");
 
@@ -53,7 +53,7 @@ export async function triggerPatrol(c: Context): Promise<Response> {
   return jsonResponse({ triggered: true });
 }
 
-export async function getGlobalConfig(c: Context): Promise<Response> {
+export async function getGlobalConfig(_c: Context): Promise<Response> {
   const { resolveConfig } = await import("@/lib/patrol/config");
   const config = await resolveConfig(null);
   return jsonResponse(config);
@@ -85,7 +85,7 @@ export async function deleteProviderConfig(c: Context): Promise<Response> {
   return jsonResponse({ deleted: true });
 }
 
-export async function listBaselines(c: Context): Promise<Response> {
+export async function listBaselines(_c: Context): Promise<Response> {
   const { getAllBaselines } = await import("@/repository/patrol-baselines");
   const baselines = await getAllBaselines();
   return jsonResponse(
@@ -128,7 +128,7 @@ export async function recoverProvider(c: Context): Promise<Response> {
   return jsonResponse({ recovered: true, providerId });
 }
 
-export async function listProbes(c: Context): Promise<Response> {
+export async function listProbes(_c: Context): Promise<Response> {
   const { getAllProbes } = await import("@/lib/patrol/probes");
   const probes = getAllProbes();
   return jsonResponse(
@@ -152,6 +152,7 @@ function formatResult(row: Record<string, unknown>) {
     actionTaken: row.actionTaken ?? null,
     latencyMs: row.latencyMs ?? null,
     errorMessage: row.errorMessage ?? null,
-    createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt ?? null,
+    createdAt:
+      row.createdAt instanceof Date ? row.createdAt.toISOString() : (row.createdAt ?? null),
   };
 }

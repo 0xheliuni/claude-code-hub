@@ -49,6 +49,16 @@ export const DEFAULT_TEMPLATES = {
     topN: "{{top_n}}",
     generatedAt: "{{generated_at}}",
   },
+
+  patrol_alert: {
+    title: "{{title}}",
+    provider: "{{provider_name}}",
+    providerId: "{{provider_id}}",
+    score: "{{score}}",
+    verdict: "{{verdict}}",
+    action: "{{action}}",
+    inspectionType: "{{inspection_type}}",
+  },
 } as const;
 
 export const DEFAULT_TEMPLATE_BY_NOTIFICATION_TYPE: Record<
@@ -59,4 +69,5 @@ export const DEFAULT_TEMPLATE_BY_NOTIFICATION_TYPE: Record<
   daily_leaderboard: DEFAULT_TEMPLATES.daily_leaderboard,
   cost_alert: DEFAULT_TEMPLATES.cost_alert,
   cache_hit_rate_alert: DEFAULT_TEMPLATES.cache_hit_rate_alert,
+  patrol_alert: DEFAULT_TEMPLATES.patrol_alert,
 };

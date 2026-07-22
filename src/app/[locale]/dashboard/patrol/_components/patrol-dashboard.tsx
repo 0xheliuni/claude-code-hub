@@ -13,8 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  usePatrolStatus,
   usePatrolResults,
+  usePatrolStatus,
   useTriggerPatrol,
 } from "@/lib/api-client/v1/patrol/hooks";
 import { PatrolSkeleton } from "./patrol-skeleton";
@@ -53,9 +53,7 @@ export function PatrolDashboard() {
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold">
-              {status?.lastRunAt
-                ? new Date(status.lastRunAt).toLocaleString()
-                : t("status.never")}
+              {status?.lastRunAt ? new Date(status.lastRunAt).toLocaleString() : t("status.never")}
             </p>
           </CardContent>
         </Card>
@@ -115,17 +113,13 @@ export function PatrolDashboard() {
                         <VerdictBadge verdict={result.verdict} t={t} />
                       </TableCell>
                       <TableCell>
-                        {result.actionTaken
-                          ? t(`actionTypes.${result.actionTaken}` as never)
-                          : "-"}
+                        {result.actionTaken ? t(`actionTypes.${result.actionTaken}` as never) : "-"}
                       </TableCell>
                       <TableCell>
                         {result.latencyMs != null ? `${result.latencyMs}ms` : "-"}
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">
-                        {result.createdAt
-                          ? new Date(result.createdAt).toLocaleString()
-                          : "-"}
+                        {result.createdAt ? new Date(result.createdAt).toLocaleString() : "-"}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -139,13 +133,7 @@ export function PatrolDashboard() {
   );
 }
 
-function VerdictBadge({
-  verdict,
-  t,
-}: {
-  verdict: string;
-  t: ReturnType<typeof useTranslations>;
-}) {
+function VerdictBadge({ verdict, t }: { verdict: string; t: ReturnType<typeof useTranslations> }) {
   const variantMap: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
     pass: "default",
     warning: "secondary",
@@ -154,8 +142,6 @@ function VerdictBadge({
   };
 
   return (
-    <Badge variant={variantMap[verdict] ?? "outline"}>
-      {t(`verdicts.${verdict}` as never)}
-    </Badge>
+    <Badge variant={variantMap[verdict] ?? "outline"}>{t(`verdicts.${verdict}` as never)}</Badge>
   );
 }
