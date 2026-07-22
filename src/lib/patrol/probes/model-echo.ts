@@ -37,7 +37,8 @@ export const modelEcho: PatrolProbe = {
 
     const requestedBase = ctx.model.replace(/-\d{8}$/, "");
     const responseBase = responseModel.replace(/-\d{8}$/, "");
-    const matches = responseBase.startsWith(requestedBase) || requestedBase.startsWith(responseBase);
+    const matches =
+      responseBase.startsWith(requestedBase) || requestedBase.startsWith(responseBase);
 
     if (!matches) {
       return {

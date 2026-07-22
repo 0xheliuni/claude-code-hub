@@ -26,18 +26,14 @@ describe("patrol scheduler", () => {
   });
 
   it("startPatrolScheduler creates interval", async () => {
-    const { startPatrolScheduler, stopPatrolScheduler } = await import(
-      "@/lib/patrol/scheduler"
-    );
+    const { startPatrolScheduler, stopPatrolScheduler } = await import("@/lib/patrol/scheduler");
 
     startPatrolScheduler();
     stopPatrolScheduler();
   });
 
   it("stopPatrolScheduler clears interval", async () => {
-    const { startPatrolScheduler, stopPatrolScheduler } = await import(
-      "@/lib/patrol/scheduler"
-    );
+    const { startPatrolScheduler, stopPatrolScheduler } = await import("@/lib/patrol/scheduler");
 
     startPatrolScheduler();
     stopPatrolScheduler();
@@ -46,9 +42,7 @@ describe("patrol scheduler", () => {
   });
 
   it("double start is idempotent", async () => {
-    const { startPatrolScheduler, stopPatrolScheduler } = await import(
-      "@/lib/patrol/scheduler"
-    );
+    const { startPatrolScheduler, stopPatrolScheduler } = await import("@/lib/patrol/scheduler");
 
     startPatrolScheduler();
     startPatrolScheduler();

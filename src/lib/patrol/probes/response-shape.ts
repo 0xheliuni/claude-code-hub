@@ -53,7 +53,11 @@ export const responseShape: PatrolProbe = {
     }
 
     const usage = json.usage as Record<string, unknown> | undefined;
-    if (!usage || typeof usage.input_tokens !== "number" || typeof usage.output_tokens !== "number") {
+    if (
+      !usage ||
+      typeof usage.input_tokens !== "number" ||
+      typeof usage.output_tokens !== "number"
+    ) {
       return {
         passed: false,
         score: 0.7,

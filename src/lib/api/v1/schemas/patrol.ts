@@ -1,7 +1,13 @@
 import { z } from "@hono/zod-openapi";
 
 export const PatrolVerdictSchema = z.enum(["pass", "warning", "critical", "counterfeit"]);
-export const PatrolActionSchema = z.enum(["none", "circuit_open", "disable", "notify_only", "recovered"]);
+export const PatrolActionSchema = z.enum([
+  "none",
+  "circuit_open",
+  "disable",
+  "notify_only",
+  "recovered",
+]);
 export const PatrolInspectionTypeSchema = z.enum(["quick_probe", "deep_fingerprint"]);
 
 export const PatrolProbeResultSchema = z.object({

@@ -76,9 +76,6 @@ export async function upsertBaseline(data: PatrolBaselineInsert): Promise<Patrol
 }
 
 export async function deleteBaseline(id: number): Promise<boolean> {
-  const result = await db
-    .delete(patrolBaselines)
-    .where(eq(patrolBaselines.id, id))
-    .returning();
+  const result = await db.delete(patrolBaselines).where(eq(patrolBaselines.id, id)).returning();
   return result.length > 0;
 }

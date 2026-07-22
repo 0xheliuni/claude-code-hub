@@ -49,10 +49,7 @@ async function disableProvider(providerId: number, verdict: PatrolVerdict): Prom
   const { eq } = await import("drizzle-orm");
   const { upsertProviderState } = await import("@/repository/patrol-state");
 
-  await db
-    .update(providers)
-    .set({ isEnabled: false })
-    .where(eq(providers.id, providerId));
+  await db.update(providers).set({ isEnabled: false }).where(eq(providers.id, providerId));
 
   await upsertProviderState(providerId, {
     lastVerdict: verdict,
@@ -63,10 +60,7 @@ async function disableProvider(providerId: number, verdict: PatrolVerdict): Prom
   });
 }
 
-async function handleRecovery(
-  providerId: number,
-  config: PatrolConfig
-): Promise<PatrolActionType> {
+async function handleRecovery(providerId: number, config: PatrolConfig): Promise<PatrolActionType> {
   if (!config.autoRecoverEnabled) return "none";
 
   const { getProviderState, incrementConsecutivePass, clearPatrolDisabled } = await import(
@@ -88,10 +82,7 @@ async function handleRecovery(
     const { providers } = await import("@/drizzle/schema");
     const { eq } = await import("drizzle-orm");
 
-    await db
-      .update(providers)
-      .set({ isEnabled: true })
-      .where(eq(providers.id, providerId));
+    await db.update(providers).set({ isEnabled: true }).where(eq(providers.id, providerId));
 
     await clearPatrolDisabled(providerId);
     return "recovered";

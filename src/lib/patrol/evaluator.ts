@@ -22,10 +22,7 @@ export function determineVerdict(
   fingerprintScore: number | null,
   config: PatrolConfig
 ): PatrolVerdict {
-  if (
-    fingerprintScore !== null &&
-    fingerprintScore < config.fingerprintMatchThreshold
-  ) {
+  if (fingerprintScore !== null && fingerprintScore < config.fingerprintMatchThreshold) {
     return "counterfeit";
   }
   if (probeScore < config.thresholdCritical) return "critical";

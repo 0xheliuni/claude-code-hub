@@ -60,7 +60,8 @@ async function runSchedulerTick(): Promise<void> {
 
     const now = new Date();
     const shouldRunQuick = config.quickProbeEnabled && shouldRunCron(config.quickProbeCron, now);
-    const shouldRunDeep = config.deepFingerprintEnabled && shouldRunCron(config.deepFingerprintCron, now);
+    const shouldRunDeep =
+      config.deepFingerprintEnabled && shouldRunCron(config.deepFingerprintCron, now);
 
     if (shouldRunQuick) {
       await runFullPatrol(config, "quick_probe");
@@ -124,9 +125,7 @@ async function inspectProviderTarget(
   if (config.skipPatrol) return;
 
   const timeoutMs =
-    inspectionType === "quick_probe"
-      ? config.quickProbeTimeoutMs
-      : config.deepFingerprintTimeoutMs;
+    inspectionType === "quick_probe" ? config.quickProbeTimeoutMs : config.deepFingerprintTimeoutMs;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);

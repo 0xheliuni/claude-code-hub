@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  DEFAULT_PATROL_CONFIG,
-  ALL_PATROL_PROBES,
-} from "@/lib/constants/patrol.constants";
+import { DEFAULT_PATROL_CONFIG, ALL_PATROL_PROBES } from "@/lib/constants/patrol.constants";
 
 describe("patrol constants", () => {
   it("default config has all required fields", () => {

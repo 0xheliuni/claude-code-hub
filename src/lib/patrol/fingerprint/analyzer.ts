@@ -56,10 +56,7 @@ export interface SimilarityResult {
   overallScore: number;
 }
 
-export function calculateSimilarity(
-  dist1: number[],
-  dist2: number[]
-): SimilarityResult {
+export function calculateSimilarity(dist1: number[], dist2: number[]): SimilarityResult {
   if (dist1.length !== dist2.length) {
     return { cosineSimilarity: 0, jsDivergence: 1, overallScore: 0 };
   }

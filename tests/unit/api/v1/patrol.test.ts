@@ -136,9 +136,7 @@ describe("patrol router registration", () => {
   test("patrol routes are registered in root app", async () => {
     const { app } = await import("@/app/api/v1/_root/app");
     const routes = app.routes;
-    const patrolPaths = routes
-      .map((r) => r.path)
-      .filter((p) => p.includes("/patrol"));
+    const patrolPaths = routes.map((r) => r.path).filter((p) => p.includes("/patrol"));
 
     expect(patrolPaths.length).toBeGreaterThan(0);
     expect(patrolPaths).toContain("/api/v1/patrol/status");

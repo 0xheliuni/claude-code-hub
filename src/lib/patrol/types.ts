@@ -21,12 +21,7 @@ export interface PatrolProbeResult {
 }
 
 export type PatrolVerdict = "pass" | "warning" | "critical" | "counterfeit";
-export type PatrolActionType =
-  | "none"
-  | "circuit_open"
-  | "disable"
-  | "notify_only"
-  | "recovered";
+export type PatrolActionType = "none" | "circuit_open" | "disable" | "notify_only" | "recovered";
 
 export interface PatrolConfig {
   enabled: boolean;
