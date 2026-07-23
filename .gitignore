@@ -93,3 +93,6 @@ tmp/
 .opencode/
 bunx-*/
 dev.log
+
+# local reference checkout: claude-detector (separate repo, not part of this project)
+/自动巡检/
