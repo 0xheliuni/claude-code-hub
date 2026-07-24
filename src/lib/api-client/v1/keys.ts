@@ -150,6 +150,8 @@ export const v1Keys = {
     results: (params?: Record<string, unknown>) =>
       ["v1", "patrol", "results", params ?? {}] as const,
     config: () => ["v1", "patrol", "config"] as const,
+    providerConfig: (providerId: number) =>
+      ["v1", "patrol", "config", "provider", providerId] as const,
     baselines: () => ["v1", "patrol", "baselines"] as const,
     probes: () => ["v1", "patrol", "probes"] as const,
   },

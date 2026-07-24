@@ -16,6 +16,7 @@ import {
   getGlobalConfig,
   getPatrolResults,
   getPatrolStatus,
+  getProviderConfig,
   listBaselines,
   listProbes,
   recoverProvider,
@@ -193,6 +194,32 @@ patrolRouter.openapi(
     },
   }),
   updateGlobalConfig as never
+);
+
+// GET /patrol/config/provider/:providerId
+patrolRouter.openapi(
+  createRoute({
+    method: "get",
+    path: "/patrol/config/provider/{providerId}",
+    middleware: requireAuth("admin"),
+    tags: ["Patrol"],
+    summary: "Get provider patrol config overrides",
+    description:
+      "Returns the raw provider-specific patrol config overrides (only the fields this provider overrides; empty object if none).",
+    "x-required-access": "admin",
+    security,
+    request: {
+      params: z.object({ providerId: z.string() }),
+    },
+    responses: {
+      200: {
+        description: "Provider config overrides.",
+        content: { "application/json": { schema: PatrolConfigSchema } },
+      },
+      ...problemResponses,
+    },
+  }),
+  getProviderConfig as never
 );
 
 // PUT /patrol/config/provider/:providerId

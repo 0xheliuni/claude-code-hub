@@ -143,6 +143,7 @@ describe("patrol router registration", () => {
     expect(patrolPaths).toContain("/api/v1/patrol/results");
     expect(patrolPaths).toContain("/api/v1/patrol/trigger");
     expect(patrolPaths).toContain("/api/v1/patrol/config/global");
+    expect(patrolPaths).toContain("/api/v1/patrol/config/provider/:providerId");
     expect(patrolPaths).toContain("/api/v1/patrol/baselines");
     expect(patrolPaths).toContain("/api/v1/patrol/probes");
     expect(patrolPaths).toContain("/api/v1/patrol/recover/:providerId");

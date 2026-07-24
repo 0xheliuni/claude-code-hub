@@ -50,14 +50,32 @@ export interface PatrolConfig {
   enabled?: boolean;
   quickProbeEnabled?: boolean;
   quickProbeCron?: string;
+  quickProbeTimeoutMs?: number;
+  quickProbeProbes?: string[];
   deepFingerprintEnabled?: boolean;
   deepFingerprintCron?: string;
+  deepFingerprintSamples?: number;
+  deepFingerprintTimeoutMs?: number;
   thresholdPass?: number;
   thresholdWarning?: number;
   thresholdCritical?: number;
+  fingerprintMatchThreshold?: number;
+  actionOnWarning?: string;
+  actionOnCritical?: string;
+  actionOnCounterfeit?: string;
   autoRecoverEnabled?: boolean;
   autoRecoverPasses?: number;
-  [key: string]: unknown;
+  autoRecoverCounterfeit?: boolean;
+  notifyOnWarning?: boolean;
+  notifyOnCritical?: boolean;
+  notifyOnCounterfeit?: boolean;
+  notifyOnRecovery?: boolean;
+  concurrencyLimit?: number;
+  retryAttempts?: number;
+  cooldownMinutes?: number;
+  probeWeights?: Record<string, number> | null;
+  skipPatrol?: boolean;
+  expectedChannel?: string | null;
 }
 
 export interface PatrolBaseline {
@@ -133,6 +151,39 @@ export function useUpdatePatrolConfig() {
     mutationFn: (config: Partial<PatrolConfig>) =>
       apiClient.put<PatrolConfig>("/api/v1/patrol/config/global", config),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: v1Keys.patrol.config() });
+    },
+  });
+}
+
+export function useProviderPatrolConfig(providerId: number) {
+  return useQuery({
+    queryKey: v1Keys.patrol.providerConfig(providerId),
+    queryFn: () =>
+      apiClient.get<Partial<PatrolConfig>>(`/api/v1/patrol/config/provider/${providerId}`),
+    enabled: Number.isFinite(providerId) && providerId > 0,
+  });
+}
+
+export function useUpdateProviderPatrolConfig() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ providerId, config }: { providerId: number; config: Partial<PatrolConfig> }) =>
+      apiClient.put<PatrolConfig>(`/api/v1/patrol/config/provider/${providerId}`, config),
+    onSuccess: (_data, { providerId }) => {
+      queryClient.invalidateQueries({ queryKey: v1Keys.patrol.providerConfig(providerId) });
+      queryClient.invalidateQueries({ queryKey: v1Keys.patrol.config() });
+    },
+  });
+}
+
+export function useDeleteProviderPatrolConfig() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (providerId: number) =>
+      apiClient.delete<{ deleted: boolean }>(`/api/v1/patrol/config/provider/${providerId}`),
+    onSuccess: (_data, providerId) => {
+      queryClient.invalidateQueries({ queryKey: v1Keys.patrol.providerConfig(providerId) });
       queryClient.invalidateQueries({ queryKey: v1Keys.patrol.config() });
     },
   });

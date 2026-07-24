@@ -68,6 +68,14 @@ export async function updateGlobalConfig(c: Context): Promise<Response> {
   return jsonResponse(updated);
 }
 
+export async function getProviderConfig(c: Context): Promise<Response> {
+  const providerId = parseInt(c.req.param("providerId") ?? "0", 10);
+  const { getPatrolConfigByProvider } = await import("@/repository/patrol-configs");
+  const { dbRowToConfigPartial } = await import("@/lib/patrol/config");
+  const row = await getPatrolConfigByProvider(providerId);
+  return jsonResponse(dbRowToConfigPartial(row) ?? {});
+}
+
 export async function updateProviderConfig(c: Context): Promise<Response> {
   const providerId = parseInt(c.req.param("providerId") ?? "0", 10);
   const body = await c.req.json();
